@@ -19,58 +19,57 @@
             </div>
             <!--Tabla lista de items   -->
             <div class="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-                <table class="w-full divide-y divide-gray-200 table-auto">
-                    <thead class="bg-indigo-500 text-white">
-                        <tr class="text-left text-xs font-bold  uppercase">
-                            <td scope="col" class="px-6 py-3">ID</td>
 
-                            <td scope="col" class="px-6 py-3">Fecha Inicio Plan</td>
-                            <td scope="col" class="px-6 py-3">Fecha Fih Plan</td>
-                            <td scope="col" class="px-6 py-3">Horas planificadas</td>
-                            <td scope="col" class="px-6 py-3">Modalidad</td>
-                            <td scope="col" class="px-6 py-3">Turbos</td>
-
-
-                            <td scope="col" class="px-6 py-3">Opciones</td>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        @foreach ($plans as $item)
-                            <tr class="text-sm font-medium text-gray-900">
-                                <td class="px-6 py-4">
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-500 text-white">
-                                        {{ $item->id }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4">{{ $item->plan_f_inicio_plan }}</td>
-                                <td class="px-6 py-4">{{ $item->plan_f_fin_plan }}</td>
-                                <td class="px-6 py-4">{{ $item->plan_horas_planificadas }}</td>
-                                <td class="px-6 py-4">{{ $item->plan_semanas_planificadas }}</td>
-                                <td class="px-6 py-4">{{ $item->plan_modalidad }}</td>
-                                <td class="px-6 py-4">{{ $item->plan_turnos }}</td>
-
-                                {{-- @if ($item->supplier_id)
-                        {{$item->supplier->nombre}}
-                    @else
-                        Proveedor no encontrado
-                    @endif --}}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{-- @livewire('cliente-edit',['cliente'=>$item],key($item->id)) --}}
-                                    <x-button wire:click="edit({{ $item }})">
-                                        <i class="fas fa-edit"></i>
-                                    </x-button>
-                                    <x-danger-button wire:click="$emit('deleteItem',{{ $item->id }})">
-                                        <!-- Usamos metodos magicos -->
-                                        <i class="fas fa-trash"></i>
-                                    </x-danger-button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                @foreach ($plans as $item)
+                    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                        <div class="px-4 py-5 sm:px-6 bg-indigo-500 text-white">
+                            <h3 class="text-lg leading-6 font-medium">Plan ID: {{ $item->id }}</h3>
+                        </div>
+                        <div class="border-t border-gray-200">
+                            <dl>
+                                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <dt class="text-sm font-medium text-gray-500">Fecha Inicio Plan</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        {{ $item->plan_f_inicio_plan }}</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Fecha Fin Plan</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        {{ $item->plan_f_fin_plan }}</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Horas planificadas</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        {{ $item->plan_horas_planificadas }}</dd>
+
+                                    <dt class="text-sm font-medium text-gray-500">Semanas Planificadas</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        {{ $item->plan_semanas_planificadas }}</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Modalidad</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        {{ $item->plan_modalidad }}</dd>
+                                    <dt class="text-sm font-medium text-gray-500">Turnos</dt>
+                                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                        {{ $item->plan_turnos }}</dd>
+                                </div>
+
+                                <!-- Repetir para cada campo -->
+                            </dl>
+                        </div>
+                        <div class="px-4 py-4 sm:px-6 flex justify-between">
+                            <x-button wire:click="edit({{ $item }})"
+                                class="text-indigo-600 hover:text-indigo-900">
+                                <i class="fas fa-edit"></i> Editar
+                            </x-button>
+                            <x-danger-button wire:click="$emit('deleteItem',{{ $item->id }})"
+                                class="text-red-600 hover:text-red-900">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </x-danger-button>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+
+
 
             @if (!$plans->count())
                 No existe ningun registro conincidente
@@ -111,30 +110,32 @@
         </script>
     @endpush
 
-
-    {{-- @livewire('calendar') --}}
-
-
-    <div class="mx-auto max-w-screen-xl bg-white overflow-hidden shadow-md sm:rounded-lg mb-20">
-        <img class="h-64 w-full object-cover" src="{{ asset('img/large2.png') }}" alt="Descripción de la imagen">
-        <div class="p-6">
-            <h1 class="text-3xl font-bold text-gray-900">Desarrollador Front-End y Back-End</h1>
-            <!-- Lo conectaremos con la base de datos... -->
-
-            <div class=" mt-4 flex flex-col ">
-                <p class="mt-1 text-sm text-gray-500">Descripción</p>
-                <p class="mt-2 text-sm text-gray-900 mr-1">
-                    Aquí va tu descripción. Puedes agregar el texto que desees en este párrafo.
-                    Aquí va tu descripción. Puedes agregar el texto que desees en este párrafo.
-                    Aquí va tu descripción. Puedes agregar el texto que desees en este párrafo.
-                    Aquí va tu descripción. Puedes agregar el texto que desees en este párrafo.
-                </p>
+    <footer class="bg-gray-800 text-white py-6 mt-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center mb-4">
+                <!-- Iconos de redes sociales -->
+                <a href="https://facebook.com" target="_blank" class="mx-2">
+                    <img src="path_to_facebook_icon.png" alt="Facebook" class="h-6">
+                </a>
+                <a href="https://twitter.com" target="_blank" class="mx-2">
+                    <img src="path_to_twitter_icon.png" alt="Twitter" class="h-6">
+                </a>
+                <a href="https://instagram.com" target="_blank" class="mx-2">
+                    <img src="path_to_instagram_icon.png" alt="Instagram" class="h-6">
+                </a>
+                <!-- Añade más iconos si es necesario -->
             </div>
 
-
-            <a href="#"
-                class="mt-4 inline-block px-6 py-2 bg-indigo-500 text-white font-semibold rounded-full">Ver detalles</a>
-
+            <div class="text-center">
+                <p>© 2023 MiEmpresa. Todos los derechos reservados.</p>
+                <div class="flex justify-center mt-2">
+                    <a href="#" class="text-yellow-400 hover:text-yellow-300 mx-2">Política de privacidad</a> |
+                    <a href="#" class="text-yellow-400 hover:text-yellow-300 mx-2">Términos de uso</a> |
+                    <a href="#" class="text-yellow-400 hover:text-yellow-300 mx-2">Contacto</a>
+                </div>
+            </div>
         </div>
-    </div>
+    </footer>
+
+
 </div>

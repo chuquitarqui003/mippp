@@ -164,7 +164,6 @@ $(document).ready(function () {
             @this.addEvent(eventData);
             calendar.addEvent({ title: title, start: info.dateStr });
             window.location.reload();
-
           }
         }
       });
